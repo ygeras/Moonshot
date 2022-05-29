@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct MissionView: View {
+    let mission: Mission
+    
     struct CrewMember {
         let role: String
         let astronaut: Astronaut
     }
     
-    let mission: Mission
     let crew: [CrewMember]
     
     init(mission: Mission, astronauts: [String: Astronaut]) {
@@ -26,7 +27,7 @@ struct MissionView: View {
             }
         }
     }
-    
+  
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
@@ -35,16 +36,14 @@ struct MissionView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: geometry.size.width * 0.6)
-                        .padding(.top)
+                        .padding(.vertical)
                     
-                    Text("\(mission.launchDate?.formatted(date: .long, time: .omitted) ?? "N/A")")
-                        .padding(.top)
+                    if let date = mission.launchDate {
+                        Label(date.formatted(date: .long, time: .omitted), systemImage: "calendar")
+                    }
                     
                     VStack(alignment: .leading) {
-                        Rectangle()
-                            .frame(height: 2)
-                            .foregroundColor(.lightBackground)
-                            .padding(.vertical)
+                        RectangleDivider()
                         
                         Text("Mission Highlights")
                             .font(.title.bold())
@@ -52,10 +51,7 @@ struct MissionView: View {
                         
                         Text(mission.description)
                         
-                        Rectangle()
-                            .frame(height: 2)
-                            .foregroundColor(.lightBackground)
-                            .padding(.vertical)
+                        RectangleDivider()
                         
                         Text("Crew")
                             .font(.title.bold())
@@ -63,35 +59,8 @@ struct MissionView: View {
                     }
                     .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(crew, id: \.role) { crewmember in
-                                NavigationLink {
-                                    AstronautView(astronaut: crewmember.astronaut)
-                                } label: {
-                                    HStack {
-                                        Image(crewmember.astronaut.id)
-                                            .resizable()
-                                            .frame(width: 104, height: 72)
-                                            .clipShape(Circle())
-                                            .overlay(
-                                                Circle()
-                                                    .strokeBorder(.white, lineWidth: 1)
-                                            )
-                                        
-                                        VStack(alignment: .leading) {
-                                            Text(crewmember.astronaut.name)
-                                                .foregroundColor(.white)
-                                                .font(.headline)
-                                            Text(crewmember.role)
-                                                .foregroundColor(.secondary)
-                                        }
-                                    }
-                                    .padding(.horizontal)
-                                }
-                            }
-                        }
-                    }
+                    CrewRoster(crew: crew)
+                
                 }
                 .padding(.bottom)
             }
