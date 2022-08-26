@@ -9,5 +9,5 @@ That app lets users learn about the missions and astronauts that formed NASA’s
 ## Project Screen
 
 <img src="images/MoonShotMain1.png" width="300"> <img src="images/MoonShotMain2.png" width="300">
-<img src="images/MissionDetails.png" width="300"> <img src="images/Crewmember.png" width="300">
+<img src="images/MissonDetails.png" width="300"> <img src="images/Crewmember.png" width="300">
 
