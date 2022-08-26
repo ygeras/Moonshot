@@ -37,6 +37,7 @@ struct MissionView: View {
                         .scaledToFit()
                         .frame(maxWidth: geometry.size.width * 0.6)
                         .padding(.vertical)
+                        .accessibilityHidden(true)
                     
                     if let date = mission.launchDate {
                         Label(date.formatted(date: .long, time: .omitted), systemImage: "calendar")
